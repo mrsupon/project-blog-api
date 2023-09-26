@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
 // Creating a schema (similar to collection)
-
 const postSchema = new mongoose.Schema({
     id:Number,
     title:String,

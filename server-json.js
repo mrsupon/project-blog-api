@@ -1,23 +1,20 @@
 import express from "express";
 import fs from "fs";
-import mongoose from "mongoose";
-import Post from "./models/Post.js";
 
 const app = express();
 const port = 4000;
 
 //data.json using
-const posts = JSON.parse(fs.readFileSync(new URL('./data.json', import.meta.url)));
+const posts = JSON.parse(fs.readFileSync(new URL('./models/data.json', import.meta.url)));
 
 let lastId = 3;
 
 // Middleware
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // GET all posts
 app.get("/posts", (req, res) => {
-  console.log(posts);
   res.json(posts);
 });
 

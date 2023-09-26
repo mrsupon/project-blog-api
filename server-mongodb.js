@@ -1,5 +1,4 @@
 import express from "express";
-import fs from "fs";
 import mongoose from "mongoose";
 import Post from "./models/Post.js";
 
@@ -22,13 +21,12 @@ app.use(express.json());
 // GET all posts
 app.get("/posts", async(req, res) => {
   const allPosts = await  Post.find() ;
-  //console.log(allPosts);
   res.status(200).json(allPosts);
 });
 
 // GET a specific post by id
 app.get("/posts/:id", async(req, res) => {
-  const id = parseInt(req.params.id);
+  const {id} = req.params;  //destructuring obj
   const foundData = await Post.findOne({id:id});
   if (foundData == false)
      { return res.status(404).json({ message: "Post not found" }); }
@@ -51,8 +49,8 @@ app.post("/posts", async(req, res) => {
 
 // PATCH a post when you just want to update one parameter
 app.patch("/posts/:id", async(req, res) => {
-  const id = parseInt(req.params.id);
-  const updatedPost = await Post.updateOne({id:id}, req.body); console.log(updatedPost);
+  const {id} = req.params; 
+  const updatedPost = await Post.updateOne({id:id}, req.body); 
   if (!updatedPost.acknowledged) 
     return res.status(404).json({ message: "Post not found" });
 
@@ -61,7 +59,7 @@ app.patch("/posts/:id", async(req, res) => {
 
 // DELETE a specific post by providing the post id
 app.delete("/posts/:id", async(req, res) => {  
-  const id = parseInt(req.params.id);
+  const {id} = req.params;
   const deletedPost =  await Post.findOneAndDelete({id:id});
   if( deletedPost==false ){
     res.status(404).json({"error":"Post is not found. can not be deleted!"});
