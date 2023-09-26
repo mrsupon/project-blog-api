@@ -6,9 +6,6 @@ import Post from "./models/Post.js";
 const app = express();
 const port = 4000;
 
-//data.json using
-const posts = JSON.parse(fs.readFileSync(new URL('./data.json', import.meta.url)));
-
 //mongoDB using
 const db = "postsDB";
 async function main() {
